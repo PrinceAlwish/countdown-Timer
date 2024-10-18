@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            background-color: blue;
+            padding: 100px;
+            border-radius: 90px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        }
+        input, select {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="number"] {
+            width: 100px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: orange;
+            color: black;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #countdown {
+            font-size: 48px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Countdown Timer</h1>
+        <p>Enter the time for countdown:</p>
+
+        <input type="number" id="timeInput" placeholder="Enter time">
+        <select id="timeUnit">
+            <option value="minutes">Minutes</option>
+            <option value="hours">Hours</option>
+        </select>
+
+        <br>
+        <button onclick="startCountdown()">Start Countdown</button>
+        
+        <div id="countdown">00:00:00</div>
+    </div>
+
+    <script>
+        function startCountdown() {
+            const timeInput = document.getElementById('timeInput').value;
+            const timeUnit = document.getElementById('timeUnit').value;
+
+            let timeInSeconds;
+            if (timeUnit === 'minutes') {
+                timeInSeconds = timeInput * 60;
+            } else if (timeUnit === 'hours') {
+                timeInSeconds = timeInput * 3600;
+            }
+
+            let countdownElement = document.getElementById('countdown');
+
+            const interval = setInterval(() => {
+                const hours = Math.floor(timeInSeconds / 3600);
+                const minutes = Math.floor((timeInSeconds % 3600) / 60);
+                const seconds = timeInSeconds % 60;
+
+                countdownElement.innerHTML = 
+                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+                if (timeInSeconds <= 0) {
+                    clearInterval(interval);
+                    countdownElement.innerHTML = "Time's up!";
+                }
+
+                timeInSeconds--;
+            }, 1000);
+        }
+    </script>
+	 <footer>
+        <p>© FOCUS Kenya Timer</p>
+        <p>Developed by AmeisenLAB, driving innovation through AI technology and thought leadership.</p>
+    </footer>
+
+</body>
+</html>
